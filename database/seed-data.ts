@@ -17,7 +17,7 @@ export const seeData: SeeData = {
     {
       description: "Entries Progress",
       status: "In-Progress",
-      createdAt: Date.now() - 100000,
+      createdAt: Date.now() - 10,
     },
     {
       description: "Entries Finished",
