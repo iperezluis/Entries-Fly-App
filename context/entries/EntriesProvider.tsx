@@ -86,7 +86,6 @@ export const EntriesProvider: FC = ({ children }) => {
     setIsLoading(true);
     try {
       const { data } = await entriesApi.delete(`/entries/${id}`);
-      console.log({ data });
       setIsLoading(false);
       dispatch({ type: "Delete Entry" });
       return router.push("/");
