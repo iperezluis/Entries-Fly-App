@@ -98,7 +98,7 @@ const deleteEntry = async (req: NextApiRequest, res: NextApiResponse<Data>) => {
     const entry = await Entry.findByIdAndDelete(id);
     await db.disconnect();
     res.status(200).json({
-      message: "entrada elimianda con exito",
+      message: "entrada eliminado con exito",
     });
   } catch (error) {
     console.log(error);
