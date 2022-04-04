@@ -22,7 +22,7 @@ export const seeData: SeeData = {
     {
       description: "Entries Finished",
       status: "Finished",
-      createdAt: Date.now() - 1000000,
+      createdAt: Date.now() - 10,
     },
   ],
 };
