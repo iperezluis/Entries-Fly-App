@@ -1,6 +1,5 @@
-# vamos a trabajar sin docker por los momentos por falta de recursos de la pc
 
-# Next.js Open Jira App
+# Next.js Entries Fly App
 
 Para correr localmente se necesita la base de datos
 ´´´´´´
