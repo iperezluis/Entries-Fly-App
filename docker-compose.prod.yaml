@@ -1,0 +1,32 @@
+version: "1"
+
+services:
+  entriesflypapp:
+    depends_on:
+      - db
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: entriesfly-image
+    container_name: entriesflyapp
+    restart: always # reiniciar el contenedor si se detiene
+    ports:
+      - "${PORT}:${PORT}"
+    # working_dir: /var/www/pokedex
+    environment:
+      SECRET_KEY: ${SECRET_KEY}
+      MONGO_URL: ${MONGO_URL}
+      PORT: ${PORT}
+    # volumes:
+    #   - ./:/var/www/pokedex
+
+  db:
+    image: mongo:5
+    container_name: entriesfly
+    restart: always
+    ports:
+      - 27017:27017
+    environment:
+      MONGODB_DATABASE: entriesdb
+    volumes:
+      - ./mongo:/data/db
