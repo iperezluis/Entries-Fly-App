@@ -25,11 +25,20 @@ export default function handler(
 
 const getEntries = async (res: NextApiResponse<Data>) => {
   //recuerda primero nos conectamos
-  await db.connect();
-  const entries = await Entry.find().sort({ createdAt: "ascending" });
-  await db.disconnect();
+  try {
+    await db.connect();
+    const entries = await Entry.find().sort({ createdAt: "ascending" });
+    await db.disconnect();
 
-  res.status(200).json(entries);
+    res.status(200).json(entries);
+  } catch (error) {
+    await db.disconnect();
+    console.log(error);
+    res.status(400).json({
+      ok: false,
+      message: "hubo un error en el servidor",
+    });
+  }
 };
 
 const addEntry = async (req: NextApiRequest, res: NextApiResponse) => {

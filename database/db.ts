@@ -13,27 +13,27 @@ const mongoConnection = {
 };
 
 export const connect = async () => {
-  try {
-    if (mongoConnection.isConnected) {
-      console.log("ya estamos conectados");
+  if (mongoConnection.isConnected) {
+    console.log("ya estamos conectados");
+    return;
+  }
+  //verificamos si ya hay conecciones activas y usamos la primera
+  if (mongoose.connections.length > 0) {
+    mongoConnection.isConnected = mongoose.connections[0].readyState;
+    //depsues de que nos conectamos a la primera posicion isCopnnected sera = 1 por lo tanto volvemos a prewguntar
+    if (mongoConnection.isConnected === 1) {
+      console.log("usando  la conexion anterior");
       return;
     }
-    //verificamos si ya hay conecciones activas y usamos la primera
-    if (mongoose.connections.length > 0) {
-      mongoConnection.isConnected = mongoose.connections[0].readyState;
-      //depsues de que nos conectamos a la primera posicion isCopnnected sera = 1 por lo tanto volvemos a prewguntar
-      if (mongoConnection.isConnected === 1) {
-        console.log("usando  la conexion anterior");
-        return;
-      }
-      await mongoose.disconnect();
-    }
-    // mongodb+srv://entries_db:Dinero8**@backend-cafe.y7fo5.mongodb.net/entriesdb
-    await mongoose.connect(process.env.MONGO_URL! || "");
+    await mongoose.disconnect();
+  }
+  // mongodb+srv://entries_db:Dinero8**@backend-cafe.y7fo5.mongodb.net/entriesdb
+  try {
+    await mongoose.connect(process.env.MONGO_URL || "");
     mongoConnection.isConnected = 1;
     console.log("conectado a mongoDB", process.env.MONGO_URL);
-  } catch (error) {
-    console.log(error);
+  } catch (error: any) {
+    console.log(error.errors.status.message);
   }
 };
 
@@ -46,5 +46,6 @@ export const disconnect = async () => {
     return;
   }
   await mongoose.disconnect();
+  mongoConnection.isConnected = 0;
   console.log("desconectado de la DB");
 };

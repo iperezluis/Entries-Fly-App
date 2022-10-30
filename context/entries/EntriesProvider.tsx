@@ -2,8 +2,9 @@ import { FC, useCallback, useEffect, useReducer, useState } from "react";
 
 import { Entry, EntryStatus } from "../../interfaces";
 import { EntriesContext, entriesReducer } from "./";
-import { entriesApi } from "../../apis";
+// import { entriesApi } from "../../apis";
 import { useRouter } from "next/router";
+import apiEntry from "../../apis/apiEntry";
 
 // import { v4 as uuidv4 } from "uuid";
 
@@ -32,7 +33,7 @@ export const EntriesProvider: FC = ({ children }) => {
     description: string
   ): Promise<Entry | undefined> => {
     try {
-      const { data } = await entriesApi.post<Entry>("/entries", {
+      const { data } = await apiEntry.post<Entry>("/entries", {
         description: description,
       });
       dispatch({ type: "Add Entry", payload: data });
@@ -56,7 +57,7 @@ export const EntriesProvider: FC = ({ children }) => {
   }: Entry): Promise<Entry | undefined> => {
     try {
       setIsLoading(true);
-      const { data } = await entriesApi.put(`/entries/${_id}`, {
+      const { data } = await apiEntry.put(`/entries/${_id}`, {
         description: description,
         status: status,
       });
@@ -73,7 +74,7 @@ export const EntriesProvider: FC = ({ children }) => {
   const loadEntries = async (): Promise<void> => {
     try {
       setIsLoading(true);
-      const { data } = await entriesApi.get<Entry[]>("/entries");
+      const { data } = await apiEntry.get<Entry[]>("/entries");
       console.log({ data });
       setIsLoading(false);
       dispatch({ type: "Get Entries", payload: data });
@@ -85,7 +86,7 @@ export const EntriesProvider: FC = ({ children }) => {
   const deleteEntry = async (id: string): Promise<boolean | undefined> => {
     setIsLoading(true);
     try {
-      const { data } = await entriesApi.delete(`/entries/${id}`);
+      const { data } = await apiEntry.delete(`/entries/${id}`);
       setIsLoading(false);
       dispatch({ type: "Delete Entry" });
       return router.push("/");
