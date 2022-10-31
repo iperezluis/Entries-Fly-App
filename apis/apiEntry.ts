@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiEntry = axios.create({
-  baseURL: `${process.env.HOSTNAME}:3000/api`,
+  baseURL: `${process.env.HOSTNAME}/api`,
 });
 
 export default apiEntry;
