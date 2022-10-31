@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../../database";
 import { Entry, IEntry } from "../../../models";
 
-type Data = { ok: boolean; message: string; error: string } | IEntry[];
+type Data = { ok: boolean; message: string; error?: any } | IEntry[];
 
 export default function handler(
   req: NextApiRequest,
