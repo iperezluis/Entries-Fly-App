@@ -31,12 +31,12 @@ const getEntries = async (res: NextApiResponse<Data>) => {
     await db.disconnect();
 
     res.status(200).json(entries);
-  } catch (error) {
+  } catch (error: any) {
     await db.disconnect();
     console.log(error);
     res.status(400).json({
       ok: false,
-      message: "hubo un error en el servidor",
+      message: error.errors.status.message,
     });
   }
 };
