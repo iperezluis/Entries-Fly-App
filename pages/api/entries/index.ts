@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { db } from "../../../database";
 import { Entry, IEntry } from "../../../models";
 
-type Data = { ok: boolean; message: string } | IEntry[];
+type Data = { ok: boolean; message: string; error: string } | IEntry[];
 
 export default function handler(
   req: NextApiRequest,
@@ -36,7 +36,8 @@ const getEntries = async (res: NextApiResponse<Data>) => {
     console.log(error);
     res.status(400).json({
       ok: false,
-      message: error.errors.status.message,
+      error: error,
+      message: "hubo un error",
     });
   }
 };
