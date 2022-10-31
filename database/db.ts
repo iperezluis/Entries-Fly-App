@@ -29,7 +29,7 @@ export const connect = async () => {
   }
   // mongodb+srv://entries_db:Dinero8**@backend-cafe.y7fo5.mongodb.net/entriesdb
   try {
-    await mongoose.connect(process.env.MONGO_URL);
+    await mongoose.connect(process.env.MONGO_URL || "");
     mongoConnection.isConnected = 1;
     console.log("conectado a mongoDB", process.env.MONGO_URL);
   } catch (error: any) {
